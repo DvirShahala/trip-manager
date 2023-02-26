@@ -1,23 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import TripCard from "./components/TripCard/TripCard";
+import AddIcon from "@mui/icons-material/Add";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Trip App Manager</h1>
+        <AddIcon />
+        <TripCard
+          title={"Trip to Paris"}
+          description={"Travel in paris and see th Eifel tower"}
+          startDate={"2023-01-01"}
+          endDate={"2023-01-06"}
+          maxTemp={10}
+          minTemp={5}
+        />
       </header>
     </div>
   );
