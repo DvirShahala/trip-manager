@@ -7,16 +7,16 @@ export const tripRoute = express.Router();
 const tripCache = new CacheService();
 
 tripRoute.get("/", (req: Request, res: Response) => {
-  res.send(tripCache.getCache());
   res.status(200);
+  res.send(tripCache.getCache());
 });
 
 tripRoute.post("/createTrip", (req: Request, res: Response) => {
   const newTrip = req.body.newTrip;
 
   tripCache.upsertEntity(newTrip, newTrip.id);
-  res.send(newTrip.id);
   res.status(200);
+  res.send(newTrip.id);
 });
 
 tripRoute.delete("/trip", (req: Request, res: Response) => {
