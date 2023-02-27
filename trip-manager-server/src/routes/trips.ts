@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { TripsStore } from "../store/tripsStore";
-import { uuid as uuidv4 } from "uuidv4";
+import { uuid } from "uuidv4";
 import { IStoreTrip } from "../types/store";
 import axios from "axios";
 import { IweatherRes } from "../types/weatherApi";
@@ -51,7 +51,7 @@ tripRoute.post("/createTrip", async (req: Request, res: Response) => {
 
     newTrip = {
       ...tripToCreate,
-      id: uuidv4(),
+      id: uuid(),
       lon: data?.data?.[0].longitude,
       lat: data?.data?.[0].latitude,
     };

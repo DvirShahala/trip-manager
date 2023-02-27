@@ -5,16 +5,16 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 
-interface IPropsCard {
+interface IPropsTripCard {
   title: string;
-  description: string;
+  description?: string;
   startDate: string | Date;
   endDate: string | Date;
   maxTemp: number;
   minTemp: number;
 }
 
-const TripCard: React.FC<IPropsCard> = ({
+const TripCard: React.FC<IPropsTripCard> = ({
   title,
   description,
   startDate,
@@ -28,9 +28,11 @@ const TripCard: React.FC<IPropsCard> = ({
         <Typography variant="h5" component="div">
           {title}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {description}
-        </Typography>
+        {description && (
+          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            {description}
+          </Typography>
+        )}
         <Typography variant="body2">
           <>
             {startDate} - {endDate}
