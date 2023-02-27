@@ -1,4 +1,4 @@
-import { IStore, ITrip } from "../types/cache";
+import { IStore, IStoreTrip } from "../types/store";
 
 export class TripsStore {
   protected trips: {};
@@ -7,11 +7,11 @@ export class TripsStore {
     this.trips = {};
   }
 
-  public upsertEntity(trip: ITrip, key: string) {
+  public upsertEntity(trip: IStoreTrip, key: string) {
     (this.trips as IStore)[key] = trip;
   }
 
-  public getByKey(key: string): ITrip {
+  public getByKey(key: string): IStoreTrip {
     return (this.trips as IStore)[key];
   }
 
