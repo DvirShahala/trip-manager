@@ -4,8 +4,6 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
-import { useMutation } from "react-query";
-import axios from "axios";
 
 interface IPropsTripCard {
   id: string;
