@@ -1,14 +1,14 @@
 import express, { Request, Response } from "express";
-import { CacheService } from "../cache/cacheService";
+import { TripsStore } from "../store/tripsStore";
 import { uuid as uuidv4 } from "uuidv4";
 
 export const tripRoute = express.Router();
 
-const tripCache = new CacheService();
+const tripCache = new TripsStore();
 
 tripRoute.get("/", (req: Request, res: Response) => {
   res.status(200);
-  res.send(tripCache.getCache());
+  res.send(tripCache.getTrips());
 });
 
 tripRoute.post("/createTrip", (req: Request, res: Response) => {
@@ -20,7 +20,7 @@ tripRoute.post("/createTrip", (req: Request, res: Response) => {
 });
 
 tripRoute.delete("/trip", (req: Request, res: Response) => {
-  tripCache.deleteFromCache(req.body.tripId);
+  tripCache.deleteFromStore(req.body.tripId);
   res.status(200);
   res.send();
 });
