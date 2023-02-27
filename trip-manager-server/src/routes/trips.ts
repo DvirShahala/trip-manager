@@ -65,3 +65,17 @@ tripRoute.post("/createTrip", async (req: Request, res: Response) => {
     res.send(e);
   }
 });
+
+tripRoute.delete("/trip", async (req: Request, res: Response) => {
+  const idToDelete: string = req.body.id;
+
+  try {
+    tripStore.deleteFromStore(idToDelete);
+
+    res.status(200);
+    res.send(`The trip ${idToDelete} delete succesfully`);
+  } catch (e) {
+    res.status(404);
+    res.send(e);
+  }
+});

@@ -4,26 +4,32 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
+import { useMutation } from "react-query";
+import axios from "axios";
 
 interface IPropsTripCard {
+  id: string;
   title: string;
   description?: string;
   startDate: string | Date;
   endDate: string | Date;
   maxTemp: number;
   minTemp: number;
+  deleteTrip: Function;
 }
 
 const TripCard: React.FC<IPropsTripCard> = ({
+  id,
   title,
   description,
   startDate,
   endDate,
   maxTemp,
   minTemp,
+  deleteTrip,
 }) => {
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ marginLeft: "10px", minWidth: "220px", marginTop: "10%" }}>
       <CardContent>
         <Typography variant="h5" component="div">
           {title}
@@ -44,7 +50,13 @@ const TripCard: React.FC<IPropsTripCard> = ({
           </>
         </Typography>
         <CardActions>
-          <Button size="small" color="warning">
+          <Button
+            size="small"
+            color="warning"
+            onClick={() => {
+              deleteTrip(id);
+            }}
+          >
             Delete
           </Button>
         </CardActions>

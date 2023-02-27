@@ -1,33 +1,70 @@
 import * as React from "react";
 import TripCard from "../TripCard/TripCard";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { ITrip } from "../../types/types";
+import { Grid } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 interface IPropsTrips {}
 
 const Trips: React.FC<IPropsTrips> = ({}) => {
-  const { isLoading, error, data } = useQuery("tripsData", () =>
+  const [tripsData, setTripsData] = useState<ITrip[] | undefined>([]);
+
+  const { isLoading, error, data } = useQuery<ITrip[]>("tripsData", () =>
     fetch("http://localhost:4000/api/v1/trips").then((res) => res.json())
   );
 
-  console.log("data", data);
+  console.log("trippppp", tripsData);
 
-  if (isLoading) return "Loading...";
+  useEffect(() => {
+    console.log("dataaaa", data);
 
-  if (error) return "An error has occurred: " + error;
+    setTripsData(data);
+  }, [data]);
+
+  const deleteTrip = useMutation((tripId: string) => {
+    return axios.delete("http://localhost:4000/api/v1/trips/trip", {
+      data: {
+        id: tripId,
+      },
+    });
+  });
+
+  const handleDeleteTrip = (tripId: string) => {
+    deleteTrip.mutate(tripId);
+    const updatedTripsData = tripsData!.filter((trip) => {
+      return trip.id !== tripId;
+    });
+
+    setTripsData(updatedTripsData);
+  };
 
   return (
-    data &&
-    data.map((trip: ITrip) => {
-      <TripCard
-        title={trip.name}
-        description={trip?.description}
-        startDate={trip.startDate}
-        endDate={trip.endDate}
-        maxTemp={trip.maxTemp}
-        minTemp={trip.minTemp}
-      />;
-    })
+    <>
+      {isLoading && "Loading..."}
+      {error && "An error has occurred"}
+      {tripsData?.length && (
+        <Grid container md={"auto"} justifyContent="center">
+          {tripsData.map((trip: ITrip) => {
+            return (
+              <Grid key={trip.id}>
+                <TripCard
+                  id={trip.id}
+                  title={trip.name}
+                  description={trip?.description}
+                  startDate={trip.startDate}
+                  endDate={trip.endDate}
+                  maxTemp={trip.maxTemp}
+                  minTemp={trip.minTemp}
+                  deleteTrip={handleDeleteTrip}
+                />
+              </Grid>
+            );
+          })}
+        </Grid>
+      )}
+    </>
   );
 };
 
