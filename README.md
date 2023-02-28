@@ -1,4 +1,4 @@
-#Trip manager app
+# Trip manager app
 
 ## RUN trip-manager-server
 
