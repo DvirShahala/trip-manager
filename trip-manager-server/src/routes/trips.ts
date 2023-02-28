@@ -56,7 +56,7 @@ tripRoute.post("/createTrip", async (req: Request, res: Response) => {
       lat: data?.data?.[0].latitude,
     };
 
-    tripStore.upsertEntity(newTrip, newTrip.id);
+    tripStore.upsertTrip(newTrip, newTrip.id);
 
     res.status(200);
     res.send(newTrip.id);

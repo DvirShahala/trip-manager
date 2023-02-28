@@ -7,19 +7,19 @@ export class TripsStore {
     this.trips = {};
   }
 
-  public upsertEntity(trip: IStoreTrip, key: string) {
-    (this.trips as IStore)[key] = trip;
+  public upsertTrip(trip: IStoreTrip, id: string) {
+    (this.trips as IStore)[id] = trip;
   }
 
-  public getByKey(key: string): IStoreTrip {
-    return (this.trips as IStore)[key];
+  public getByKey(id: string): IStoreTrip {
+    return (this.trips as IStore)[id];
   }
 
   public getTrips(): IStore {
     return this.trips;
   }
 
-  public deleteFromStore(key: string): void {
-    delete (this.trips as IStore)[key];
+  public deleteFromStore(id: string): void {
+    delete (this.trips as IStore)[id];
   }
 }

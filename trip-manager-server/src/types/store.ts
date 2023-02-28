@@ -10,5 +10,5 @@ export type IStoreTrip = {
 };
 
 export type IStore = {
-  [key: string]: IStoreTrip;
+  [id: string]: IStoreTrip;
 };
