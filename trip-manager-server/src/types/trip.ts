@@ -7,3 +7,5 @@ export interface IFullTrip extends IStoreTrip {
 }
 
 export type ITripFromFE = Omit<IStoreTrip, "id" | "lon" | "lat">;
+
+export type ITripFromUser = Omit<IStoreTrip, "id">;

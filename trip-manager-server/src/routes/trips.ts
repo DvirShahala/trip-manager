@@ -1,10 +1,9 @@
 import express, { Request, Response } from "express";
 import { TripsStore } from "../store/tripsStore";
-import { uuid } from "uuidv4";
 import { IStoreTrip } from "../types/store";
 import axios from "axios";
 import { IweatherRes } from "../types/weatherApi";
-import { IFullTrip, ITripFromFE } from "../types/trip";
+import { IFullTrip, ITripFromFE, ITripFromUser } from "../types/trip";
 import { IGeoRes } from "../types/geo";
 
 export const tripRoute = express.Router();
@@ -43,7 +42,7 @@ tripRoute.post("/createTrip", async (req: Request, res: Response) => {
   const tripToCreate: ITripFromFE = req.body.tripToCreate;
 
   try {
-    let newTrip: IStoreTrip;
+    let newTrip: ITripFromUser;
 
     const { data } = await axios.get<IGeoRes>(
       `${process.env.BASE_GEOCODING_API_URL}?access_key=${process.env.GEOCODING_API_ACCESS_KEY}&query=${tripToCreate.destination}`
@@ -51,15 +50,14 @@ tripRoute.post("/createTrip", async (req: Request, res: Response) => {
 
     newTrip = {
       ...tripToCreate,
-      id: uuid(),
       lon: data?.data?.[0].longitude,
       lat: data?.data?.[0].latitude,
     };
 
-    tripStore.upsertTrip(newTrip, newTrip.id);
+    const newId = tripStore.createTrip(newTrip);
 
     res.status(200);
-    res.send(newTrip.id);
+    res.send(newId);
   } catch (e) {
     res.status(400);
     res.send(e);
